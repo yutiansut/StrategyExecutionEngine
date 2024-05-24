@@ -12,6 +12,16 @@ homepage = "https://github.com/joaquinbejar/StrategyExecutionEngine"
 documentation = "https://docs.rs/strategy_execution_engine"
 keywords = ["order", "execution", "strategy", "market", "redis"]
 categories = ["finance", "network-programming", "asynchronous"]
+exclude = [
+    "/examples",
+    "/tests",
+    "/target",
+    "/.git",
+    "/.github",
+    "/.idea",
+    "/.vscode",
+    "Cargo.lock"
+]
 
 [dependencies]
 tokio = { version = "1.37.0", features = ["rt", "rt-multi-thread", "macros", "time"] }
@@ -44,15 +54,4 @@ path = "tests/unit/config_test.rs"
 [lib]
 name = "strategy_execution_engine"
 path = "src/lib.rs"
-
-exclude = [
-    "/examples",
-    "/tests",
-    "/target",
-    "/.git",
-    "/.github",
-    "/.idea",
-    "/.vscode",
-    "Cargo.lock"
-]
 
