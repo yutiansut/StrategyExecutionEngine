@@ -1,0 +1,57 @@
+[package]
+name = "strategy_execution_engine"
+version = "0.1.0"
+edition = "2021"
+
+authors = ["Joaquin Bejar <jb@taunais.com>"]
+description = "A Rust library for creating and executing market order strategies with integration for Kafka, NATS, RabbitMQ, ZeroMQ, and Redis."
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/joaquinbejar/StrategyExecutionEngine"
+homepage = "https://github.com/joaquinbejar/StrategyExecutionEngine"
+documentation = "https://docs.rs/strategy_execution_engine"
+keywords = ["order", "execution", "strategy", "market", "redis"]
+categories = ["finance", "network-programming", "asynchronous"]
+
+[dependencies]
+tokio = { version = "1.37.0", features = ["rt", "rt-multi-thread", "macros", "time"] }
+rdkafka = "0.36.2"
+futures-util = "0.3.30"
+dotenv = "0.15.0"
+thiserror = "1.0.60"
+serde_json = "1.0.117"
+
+[dev-dependencies]
+mockall = "0.12.1"
+tokio-test = "0.4.4"
+futures-util = "0.3.30"
+async-std = "1.12.0"
+lazy_static = "1.4.0"
+
+[[example]]
+name = "example_simple"
+path = "examples/simple.rs"
+
+[[example]]
+name = "example_fully"
+path = "examples/fully.rs"
+
+[[test]]
+name = "config_test"
+path = "tests/unit/config_test.rs"
+
+[lib]
+name = "strategy_execution_engine"
+path = "src/lib.rs"
+
+exclude = [
+    "/examples",
+    "/tests",
+    "/target",
+    "/.git",
+    "/.github",
+    "/.idea",
+    "/.vscode",
+    "Cargo.lock"
+]
+
