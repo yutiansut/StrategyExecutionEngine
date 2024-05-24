@@ -27,19 +27,18 @@ THE SOFTWARE.
 ******************************************************************************/
 
 #[cfg(test)]
-mod tests {
+mod config_test {
+    use lazy_static::lazy_static;
     use std::env;
+    use std::sync::Mutex;
     use strategy_execution_engine::config::{
         Config, JsonSerializable, KafkaConfig, NatsConfig, RabbitMqConfig, RedisConfig,
         ZeroMqConfig,
     };
-    use std::sync::Mutex;
-    use lazy_static::lazy_static;
 
     lazy_static! {
         static ref ENV_MUTEX: Mutex<()> = Mutex::new(());
     }
-
 
     #[test]
     fn test_kafka_config_serialization() {
@@ -108,7 +107,6 @@ mod tests {
   "zeromq": "{\n  \"zmq_url\": \"tcp://localhost:5555\"\n}"
 }"#;
 
-        println!("{}", json);
         assert_eq!(json, expected_json.trim());
     }
 

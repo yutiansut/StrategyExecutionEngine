@@ -1,30 +1,30 @@
 /*******************************************************************************
- Copyright (c) 2024.
+Copyright (c) 2024.
 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ******************************************************************************/
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+******************************************************************************/
 
 /******************************************************************************
-    Author:
-    Email: jb@taunais.com
-    Date: 24/5/24
- ******************************************************************************/
+   Author:
+   Email: jb@taunais.com
+   Date: 24/5/24
+******************************************************************************/
 
 use serde::Serialize;
 use serde_json::json;
@@ -70,7 +70,7 @@ pub struct RedisConfig {
 // Implementing JsonSerializable trait for each messaging configuration structure.
 
 impl JsonSerializable for KafkaConfig {
-     fn print_as_json(&self) -> JsonResult<String> {
+    fn print_as_json(&self) -> JsonResult<String> {
         serde_json::to_string_pretty(self)
     }
 }
@@ -135,7 +135,9 @@ impl Config {
 
     /// Gets the Kafka configuration from environment variables.
     fn get_kafka_config() -> Option<KafkaConfig> {
-        env::var("KAFKA_URL").ok().map(|kafka_url| KafkaConfig { kafka_url })
+        env::var("KAFKA_URL")
+            .ok()
+            .map(|kafka_url| KafkaConfig { kafka_url })
     }
 
     /// Gets the NATS configuration from environment variables.
@@ -148,17 +150,23 @@ impl Config {
 
     /// Gets the RabbitMQ configuration from environment variables.
     fn get_rabbitmq_config() -> Option<RabbitMqConfig> {
-        env::var("RABBITMQ_URL").ok().map(|rabbitmq_url| RabbitMqConfig { rabbitmq_url })
+        env::var("RABBITMQ_URL")
+            .ok()
+            .map(|rabbitmq_url| RabbitMqConfig { rabbitmq_url })
     }
 
     /// Gets the ZeroMQ configuration from environment variables.
     fn get_zeromq_config() -> Option<ZeroMqConfig> {
-        env::var("ZMQ_URL").ok().map(|zmq_url| ZeroMqConfig { zmq_url })
+        env::var("ZMQ_URL")
+            .ok()
+            .map(|zmq_url| ZeroMqConfig { zmq_url })
     }
 
     /// Gets the Redis configuration from environment variables.
     fn get_redis_config() -> Option<RedisConfig> {
-        env::var("REDIS_URL").ok().map(|redis_url| RedisConfig { redis_url })
+        env::var("REDIS_URL")
+            .ok()
+            .map(|redis_url| RedisConfig { redis_url })
     }
 }
 
