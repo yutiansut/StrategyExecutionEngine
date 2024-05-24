@@ -36,6 +36,7 @@ use crate::constants::{*};
 pub struct Config {
     /// The WebSocket URL for connecting to the server.
     pub kafka_url: String,
+    pub nats_url: String,
 }
 
 /// An enum representing various errors that can occur during configuration.
@@ -54,7 +55,8 @@ impl Config {
     /// Returns a `ConfigError` if a required environment variable is missing.
     pub fn new() -> Result<Self, ConfigError> {
         Ok(Config {
-            kafka_url: Self::get_env_var_or_default("KAFKA_URL", KAFKA_URL.to_string())
+            kafka_url: Self::get_env_var_or_default("KAFKA_URL", KAFKA_URL.to_string()),
+            nats_url: Self::get_env_var_or_error("NATS_URL")?,
         })
     }
 
@@ -93,6 +95,7 @@ impl Config {
     pub fn print_as_json(&self) -> serde_json::Result<String> {
         let json_config = json!({
             "KAFKA_URL": self.kafka_url,
+            "NATS_URL": self.nats_url,
         });
         serde_json::to_string_pretty(&json_config)
     }
