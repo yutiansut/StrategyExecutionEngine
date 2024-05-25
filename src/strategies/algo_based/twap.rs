@@ -46,6 +46,8 @@ strategies using TWAP. (Chapter 6 covers time-weighted strategies in detail).
 
 use crate::models::{ChildOrder, ParentOrder};
 use crate::strategies::common::OrderSplitStrategy;
+use std::vec::Vec;
+
 
 pub struct TWAPStrategy;
 

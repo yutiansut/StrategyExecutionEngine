@@ -27,10 +27,10 @@ THE SOFTWARE.
 ******************************************************************************/
 // Declaring submodules within the models module
 pub mod child_orders;
-pub mod common;
+pub mod common_orders;
 pub mod parent_orders;
 
 // Re-exporting submodules to make them accessible from the models module
 pub use child_orders::*;
-pub use common::*;
+pub use common_orders::*;
 pub use parent_orders::*;

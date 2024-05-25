@@ -26,7 +26,7 @@ THE SOFTWARE.
    Date: 25/5/24
 ******************************************************************************/
 // Declaring submodules within the clients module
-pub mod common;
+pub mod common_client;
 pub mod kafka_client;
 pub mod nats_client;
 pub mod rabbitmq_client;
@@ -34,7 +34,7 @@ pub mod redis_client;
 pub mod zeromq_client;
 
 // Re-exporting submodules to make them accessible from the clients module
-pub use common::*;
+pub use common_client::*;
 pub use kafka_client::*;
 pub use nats_client::*;
 pub use rabbitmq_client::*;

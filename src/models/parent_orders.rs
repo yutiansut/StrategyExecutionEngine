@@ -26,7 +26,7 @@ THE SOFTWARE.
    Date: 25/5/24
 ******************************************************************************/
 
-use super::common::{OrderCommon, OrderTrait};
+use super::common_orders::{OrderCommon, OrderTrait};
 use serde::{Deserialize, Serialize};
 
 /// Structure representing a parent order.
