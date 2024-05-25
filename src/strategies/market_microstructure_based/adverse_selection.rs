@@ -25,4 +25,22 @@
     Email: jb@taunais.com 
     Date: 25/5/24
  ******************************************************************************/
- 
+
+/*
+Adverse Selection
+According to "Empirical Market Microstructure" by Joel Hasbrouck, adverse
+selection strategies involve monitoring and adjusting order executions to avoid
+being exploited by traders with superior information. This involves being aware
+of the information asymmetry in the market and making execution decisions
+that mitigate the risk of trading against better-informed participants.
+
+Example: A trader might adjust their execution strategy when they detect
+unusual trading patterns that suggest informed trading, thus reducing the
+potential losses from adverse selection.
+
+Reference for Further Reading:
+"Empirical Market Microstructure" by Joel Hasbrouck: This book covers
+various aspects of adverse selection and its impact on trading strategies.
+(Chapter 4 provides insights into adverse selection and methods to manage it).
+*/
+

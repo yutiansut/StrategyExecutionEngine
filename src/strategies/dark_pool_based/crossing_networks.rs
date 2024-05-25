@@ -25,4 +25,23 @@
     Email: jb@taunais.com 
     Date: 25/5/24
  ******************************************************************************/
- 
+
+/*
+Crossing Networks
+In "Dark Pools: The Structure and Future of Off-Exchange Trading and Liquidity"
+by Erik Banks, crossing networks are described as a method to use dark pools
+to find counterparties and execute large orders without revealing the order size
+to the public market. This helps in avoiding price impact and maintaining the
+confidentiality of trading intentions.
+
+Example: A trader uses a crossing network within a dark pool to match buy and
+sell orders for a large block of shares, ensuring that the transaction occurs
+without alerting the broader market, thereby preventing adverse price movements.
+
+Reference for Further Reading:
+"Dark Pools: The Structure and Future of Off-Exchange Trading and Liquidity"
+by Erik Banks: This book provides a comprehensive overview of dark pools and
+their mechanisms. (Chapter 2 discusses crossing networks and their benefits in
+detail).
+*/
+

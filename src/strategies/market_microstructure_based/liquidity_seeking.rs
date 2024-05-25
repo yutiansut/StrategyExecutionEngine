@@ -25,4 +25,22 @@
     Email: jb@taunais.com 
     Date: 25/5/24
  ******************************************************************************/
- 
+
+/*
+Liquidity Seeking
+Based on "Empirical Market Microstructure" by Joel Hasbrouck, liquidity seeking
+strategies involve executing orders in segments of the market with the highest
+liquidity. The aim is to minimize market impact by taking advantage of areas
+where there are more buyers and sellers, ensuring better execution prices and
+reduced slippage.
+
+Example: A trader identifies the most liquid times and venues for a particular
+security and schedules their large order to be executed during these periods,
+thereby reducing the likelihood of moving the market price.
+
+Reference for Further Reading:
+"Empirical Market Microstructure" by Joel Hasbrouck: This book provides a
+detailed analysis of market structures and the dynamics of liquidity. (Chapter 3
+discusses liquidity and execution strategies in detail).
+*/
+

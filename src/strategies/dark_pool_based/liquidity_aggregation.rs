@@ -25,4 +25,22 @@
     Email: jb@taunais.com 
     Date: 25/5/24
  ******************************************************************************/
- 
+
+/*
+Liquidity Aggregation
+According to "Dark Pools: The Structure and Future of Off-Exchange Trading and
+Liquidity" by Erik Banks, liquidity aggregation involves combining liquidity from
+multiple sources to execute large orders more efficiently. By aggregating liquidity,
+traders can ensure that their large orders are filled at the best possible prices
+without causing significant market disruption.
+
+Example: A trader aggregates liquidity from various dark pools and other off-
+exchange venues to execute a large sell order, thereby achieving a better average
+price and minimizing market impact.
+
+Reference for Further Reading:
+"Dark Pools: The Structure and Future of Off-Exchange Trading and Liquidity"
+by Erik Banks: This book explains the concept of liquidity aggregation and its
+importance in modern trading. (Chapter 3 covers liquidity aggregation techniques
+and their applications).
+*/

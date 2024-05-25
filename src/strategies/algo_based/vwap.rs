@@ -25,4 +25,36 @@
     Email: jb@taunais.com 
     Date: 25/5/24
  ******************************************************************************/
- 
+
+/*
+VWAP (Volume Weighted Average Price)
+The VWAP strategy executes orders to achieve a price close to the volume
+weighted average price. VWAP is calculated by taking the total dollar amount
+traded for every transaction (price times volume) and dividing it by the
+total shares traded for the day. This strategy aims to minimize the market
+impact by spreading the order throughout the trading day, aligning with the
+natural volume distribution.
+
+Example: If a trader wants to buy 10,000 shares, the VWAP algorithm will
+distribute the order to buy shares at times when the trading volume is high,
+thus achieving an average price close to the VWAP.
+
+Reference for Further Reading:
+"The Market Maker's Edge" by Joshua Lukeman: This book provides insights
+into various trading tactics, including VWAP strategies. (Chapter 5 discusses
+volume-weighted strategies in detail).
+*/
+
+
+
+use crate::models::{ParentOrder, ChildOrder};
+use crate::strategies::common::OrderSplitStrategy;
+
+pub struct VWAPStrategy;
+
+impl OrderSplitStrategy for VWAPStrategy {
+    fn split(&self, parent_order: &ParentOrder) -> Vec<ChildOrder> {
+        // Implement the VWAP splitting logic here
+        vec![]
+    }
+}

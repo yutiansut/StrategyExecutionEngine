@@ -25,5 +25,8 @@
     Email: jb@taunais.com 
     Date: 25/5/24
  ******************************************************************************/
-mod vwap;
-mod twap;
+pub mod twap;
+pub mod vwap;
+
+pub use twap::*;
+pub use vwap::*;

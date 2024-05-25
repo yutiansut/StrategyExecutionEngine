@@ -25,4 +25,25 @@
     Email: jb@taunais.com 
     Date: 25/5/24
  ******************************************************************************/
- 
+
+/******************************************************************************
+    The Bid-Ask Quotation Strategy involves adjusting the bid (buy) and ask (sell) prices to balance
+    incoming orders and minimize inventory risk. This strategy is often used by market makers and
+    involves setting the bid price slightly lower and the ask price slightly higher than the current
+    market price. The goal is to profit from the spread between the bid and ask prices while managing
+    the inventory levels effectively.
+
+    Bid Price: The highest price that a buyer is willing to pay for a security.
+    Ask Price: The lowest price that a seller is willing to accept for a security.
+    Spread: The difference between the bid and ask prices.
+    By continuously adjusting these prices based on market conditions, order flow, and inventory levels,
+     market makers can manage their risk. If they hold too much inventory, they might lower the ask
+     price to sell off some of their holdings. Conversely, if their inventory is too low, they might
+     raise the bid price to attract more sellers.
+
+    Reference for Further Reading:
+
+    "Market Microstructure Theory" by Maureen O'Hara: This book provides a comprehensive overview of
+    market making and the role of bid-ask spreads in managing inventory risk. (Chapter 2 discusses
+    inventory models and bid-ask strategies in detail).
+ ******************************************************************************/

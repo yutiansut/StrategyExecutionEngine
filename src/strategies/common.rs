@@ -25,4 +25,10 @@
     Email: jb@taunais.com 
     Date: 25/5/24
  ******************************************************************************/
- 
+
+
+use crate::models::{ParentOrder, ChildOrder};
+
+pub trait OrderSplitStrategy {
+    fn split(&self, parent_order: &ParentOrder) -> Vec<ChildOrder>;
+}
