@@ -26,7 +26,7 @@ THE SOFTWARE.
    Date: 25/5/24
 ******************************************************************************/
 pub mod algo_based;
-pub mod common;
+pub mod common_strategies;
 pub mod dark_pool_based;
 pub mod inventory_based;
 pub mod market_microstructure_based;
@@ -34,7 +34,7 @@ pub mod technical_indicator_based;
 pub mod time_volume_based;
 
 pub use algo_based::*;
-pub use common::*;
+pub use common_strategies::*;
 pub use dark_pool_based::*;
 pub use inventory_based::*;
 pub use market_microstructure_based::*;

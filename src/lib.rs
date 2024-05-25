@@ -31,10 +31,11 @@ pub mod clients;
 pub mod config;
 pub mod constants;
 pub mod models;
-mod strategies;
+pub mod strategies;
 
 // Re-exporting modules to make them accessible from the crate root
 pub use clients::*;
 pub use config::*;
 pub use constants::*;
 pub use models::*;
+pub use strategies::*;

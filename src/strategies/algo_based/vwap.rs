@@ -46,7 +46,7 @@ volume-weighted strategies in detail).
 */
 
 use crate::models::{ChildOrder, ParentOrder};
-use crate::strategies::common::OrderSplitStrategy;
+use crate::strategies::common_strategies::OrderSplitStrategy;
 
 pub struct VWAPStrategy;
 
