@@ -48,7 +48,6 @@ use crate::models::{ChildOrder, ParentOrder};
 use crate::strategies::common::OrderSplitStrategy;
 use std::vec::Vec;
 
-
 pub struct TWAPStrategy;
 
 impl OrderSplitStrategy for TWAPStrategy {

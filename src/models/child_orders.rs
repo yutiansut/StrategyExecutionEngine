@@ -26,9 +26,9 @@ THE SOFTWARE.
    Date: 25/5/24
 ******************************************************************************/
 
-use std::string::String;
 use super::common_orders::{OrderCommon, OrderTrait};
 use serde::{Deserialize, Serialize};
+use std::string::String;
 
 /// Structure representing a child order.
 #[derive(Debug, Clone, Serialize, Deserialize)]
