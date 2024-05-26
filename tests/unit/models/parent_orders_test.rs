@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #[cfg(test)]
 mod parent_orders_tests {
-    use super::*;
+    use serde_json;
     use strategy_execution_engine::models::orders::{
         Futures, OptionType, Options, Order, OrderType, ProductType, Side, Swap, TimeInForce, CFD,
     };
@@ -326,5 +326,80 @@ mod parent_orders_tests {
         assert!(parent_order.order_common.swap_opt.is_none());
         assert!(parent_order.order_common.cfd_opt.is_some());
         assert_eq!(parent_order.strategy_id, "strategy5");
+    }
+
+    #[test]
+    fn test_serialize_parent_order() {
+        let parent_order = ParentOrder::new(
+            String::from("order1"),
+            100,
+            ProductType::Spot,
+            OrderType::Market,
+            Some(3000.0),
+            1622512800,
+            Some(1625114800),
+            String::from("AAPL"),
+            Side::Buy,
+            String::from("USD"),
+            Some(String::from("NASDAQ")),
+            Some(TimeInForce::GTC),
+            None,
+            None,
+            None,
+            None,
+            String::from("strategy1"),
+        );
+
+        let serialized = serde_json::to_string(&parent_order).unwrap();
+        println!("{}", serialized);
+        assert!(serialized.contains("\"id\":\"order1\""));
+        assert!(serialized.contains("\"quantity\":100"));
+        assert!(serialized.contains("\"product_type\":\"Spot\""));
+        assert!(serialized.contains("\"order_type\":\"Market\""));
+        assert!(serialized.contains("\"price\":3000.0"));
+        assert!(serialized.contains("\"timestamp\":1622512800"));
+        assert!(serialized.contains("\"expiry_date\":1625114800"));
+        assert!(serialized.contains("\"symbol\":\"AAPL\""));
+        assert!(serialized.contains("\"side\":\"Buy\""));
+        assert!(serialized.contains("\"currency\":\"USD\""));
+        assert!(serialized.contains("\"exchange\":\"NASDAQ\""));
+        assert!(serialized.contains("\"timeinforce\":\"GTC\""));
+        assert!(serialized.contains("\"strategy_id\":\"strategy1\""));
+    }
+
+    #[test]
+    fn test_deserialize_parent_order() {
+        let data = r#"
+        {
+            "id": "order1",
+            "quantity": 100,
+            "product_type": "Spot",
+            "order_type": "Market",
+            "price": 3000.0,
+            "timestamp": 1622512800,
+            "expiry_date": 1625114800,
+            "symbol": "AAPL",
+            "side": "Buy",
+            "currency": "USD",
+            "exchange": "NASDAQ",
+            "timeinforce": "GTC",
+            "strategy_id": "strategy1"
+        }
+        "#;
+
+        let deserialized: ParentOrder = serde_json::from_str(data).unwrap();
+        assert_eq!(deserialized.order_common.id, "order1");
+        assert_eq!(deserialized.order_common.quantity, 100);
+        assert_eq!(format!("{:?}", deserialized.order_common.product_type), "Spot");
+        assert_eq!(format!("{:?}", deserialized.order_common.order_type), "Market");
+        assert_eq!(deserialized.order_common.price, Some(3000.0));
+        assert_eq!(deserialized.order_common.timestamp, 1622512800);
+        assert_eq!(deserialized.order_common.expiry_date, Some(1625114800));
+        assert_eq!(deserialized.order_common.symbol, "AAPL");
+        assert_eq!(format!("{:?}", deserialized.order_common.side), "Buy");
+        assert_eq!(deserialized.order_common.currency, "USD");
+        assert_eq!(deserialized.order_common.exchange, Some(String::from("NASDAQ")));
+        assert_eq!(format!("{:?}", deserialized.order_common.timeinforce), "Some(GTC)");
+        assert_eq!(deserialized.strategy_id, "strategy1");
     }
 }
