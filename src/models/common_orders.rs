@@ -56,9 +56,9 @@ pub enum OptionType {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum TimeInForce {
-    GTC,
-    IOC,
-    GTD,
+    GTC, // Good-Til-Canceled
+    IOC, // Immediate-Or-Cancel
+    GTD, // Good-Til-Date
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -102,7 +102,6 @@ pub struct Swap {
     pub notional_amount: f64,
 }
 
-
 /// Common structure for orders.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct OrderCommon {
@@ -115,7 +114,7 @@ pub struct OrderCommon {
     pub expiry_date: Option<u64>,
     pub symbol: String,
     pub side: Side,
-    pub strategy_id: Option<String>,
+    // pub strategy_id: Option<String>,
     pub timeinforce: Option<TimeInForce>,
 
     // Futures specific fields
@@ -129,33 +128,97 @@ pub struct OrderCommon {
 
     // CFDs specific fields
     pub cfd_opt: Option<String>,
-
+}
+impl OrderCommon {
+    pub fn new(
+        id: String,
+        quantity: u32,
+        product_type: ProductType,
+        order_type: OrderType,
+        price: Option<f64>,
+        timestamp: u64,
+        expiry_date: Option<u64>,
+        symbol: String,
+        side: Side,
+        timeinforce: Option<TimeInForce>,
+        futures_opt: Option<Futures>,
+        options_opt: Option<Options>,
+        swap_opt: Option<Swap>,
+        cfd_opt: Option<String>,
+    ) -> Self {
+        OrderCommon {
+            id: id,
+            quantity: quantity,
+            product_type: product_type,
+            order_type: order_type,
+            price: price,
+            timestamp: timestamp,
+            expiry_date: expiry_date,
+            symbol: symbol,
+            side: side,
+            timeinforce: timeinforce,
+            futures_opt: futures_opt,
+            options_opt: options_opt,
+            swap_opt: swap_opt,
+            cfd_opt: cfd_opt,
+        }
+    }
 }
 
 
 /// Trait defining common behaviors for orders.
 pub trait OrderTrait {
-    fn new(id: String, quantity: u32) -> Self;
-    fn get_id(&self) -> &String;
-    fn get_quantity(&self) -> u32;
+    fn new(
+        id: String,
+        quantity: u32,
+        product_type: ProductType,
+        order_type: OrderType,
+        price: Option<f64>,
+        timestamp: u64,
+        expiry_date: Option<u64>,
+        symbol: String,
+        side: Side,
+        timeinforce: Option<TimeInForce>,
+        futures_opt: Option<Futures>,
+        options_opt: Option<Options>,
+        swap_opt: Option<Swap>,
+        cfd_opt: Option<String>,
+    ) -> Self;
 }
 
-impl OrderCommon {
-    pub fn new(id: String, quantity: u32) -> Self {
-        OrderCommon { id, quantity }
-    }
-}
 
 impl OrderTrait for OrderCommon {
-    fn new(id: String, quantity: u32) -> Self {
-        OrderCommon::new(id, quantity)
-    }
-
-    fn get_id(&self) -> &String {
-        &self.id
-    }
-
-    fn get_quantity(&self) -> u32 {
-        self.quantity
+    fn new(
+        id: String,
+        quantity: u32,
+        product_type: ProductType,
+        order_type: OrderType,
+        price: Option<f64>,
+        timestamp: u64,
+        expiry_date: Option<u64>,
+        symbol: String,
+        side: Side,
+        timeinforce: Option<TimeInForce>,
+        futures_opt: Option<Futures>,
+        options_opt: Option<Options>,
+        swap_opt: Option<Swap>,
+        cfd_opt: Option<String>,
+    ) -> Self {
+        OrderCommon::new(
+            id,
+            quantity,
+            product_type,
+            order_type,
+            price,
+            timestamp,
+            expiry_date,
+            symbol,
+            side,
+            timeinforce,
+            futures_opt,
+            options_opt,
+            swap_opt,
+            cfd_opt,
+        )
     }
 }

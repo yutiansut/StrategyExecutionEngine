@@ -30,8 +30,8 @@ use serde::Serialize;
 use serde_json::json;
 use serde_json::Result as JsonResult;
 use std::env;
-use thiserror::Error;
 use std::string::String;
+use thiserror::Error;
 
 /// Trait for serializing structures to JSON.
 pub trait JsonSerializable {
