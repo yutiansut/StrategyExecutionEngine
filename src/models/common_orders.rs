@@ -27,12 +27,73 @@ THE SOFTWARE.
 ******************************************************************************/
 use serde::{Deserialize, Serialize};
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum ProductType {
+    Spot,
+    Futures,
+    Option,
+    Swap,
+    CFD,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum OrderType {
+    Market,
+    Limit,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum Side {
+    Buy,
+    Sell,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum OptionType {
+    Call,
+    Put,
+}
+
+
 /// Common structure for orders.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct OrderCommon {
     pub id: String,
     pub quantity: u32,
+    pub product_type: ProductType,
+    pub order_type: OrderType,
+    pub price: Option<f64>,
+    pub timestamp: u64,
+    pub expiry_date: Option<u64>,
+    pub symbol: String,
+    pub side: Side,
+    pub strategy_id: Option<String>,
+
+
+    // Futures specific fields
+    pub contract_symbol: Option<String>,
+    pub delivery_date: Option<u64>,
+
+    // Options specific fields
+    pub strike_price: Option<f64>,
+    pub option_type: Option<OptionType>,
+
+    // Swaps specific fields
+    pub fixed_rate: Option<f64>,
+    pub floating_rate_index: Option<String>,
+    pub notional_amount: Option<f64>,
+
+    // Bonds specific fields
+    pub bond_coupon: Option<f64>,
+    pub bond_maturity_date: Option<u64>,
+
+    // Crypto specific fields
+    pub crypto_wallet_address: Option<String>,
+
+    // RealEstate specific fields
+    pub real_estate_property_id: Option<String>,
 }
+
 
 /// Trait defining common behaviors for orders.
 pub trait OrderTrait {
