@@ -30,7 +30,7 @@ THE SOFTWARE.
 mod parent_orders_tests {
     use serde_json;
     use strategy_execution_engine::models::orders::{
-        Futures, OptionType, Options, Order, OrderType, ProductType, Side, Swap, TimeInForce, CFD,
+        Futures, OptionType, Options, OrderType, ProductType, Side, Swap, TimeInForce, CFD,
     };
     use strategy_execution_engine::models::parent_orders::ParentOrder;
 
