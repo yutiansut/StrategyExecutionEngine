@@ -104,7 +104,7 @@ pub struct Swap {
 
 /// Common structure for orders.
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct OrderCommon {
+pub struct Order {
     pub id: String,
     pub quantity: u32,
     pub product_type: ProductType,
@@ -129,7 +129,7 @@ pub struct OrderCommon {
     // CFDs specific fields
     pub cfd_opt: Option<String>,
 }
-impl OrderCommon {
+impl Order {
     pub fn new(
         id: String,
         quantity: u32,
@@ -146,65 +146,7 @@ impl OrderCommon {
         swap_opt: Option<Swap>,
         cfd_opt: Option<String>,
     ) -> Self {
-        OrderCommon {
-            id: id,
-            quantity: quantity,
-            product_type: product_type,
-            order_type: order_type,
-            price: price,
-            timestamp: timestamp,
-            expiry_date: expiry_date,
-            symbol: symbol,
-            side: side,
-            timeinforce: timeinforce,
-            futures_opt: futures_opt,
-            options_opt: options_opt,
-            swap_opt: swap_opt,
-            cfd_opt: cfd_opt,
-        }
-    }
-}
-
-
-/// Trait defining common behaviors for orders.
-pub trait OrderTrait {
-    fn new(
-        id: String,
-        quantity: u32,
-        product_type: ProductType,
-        order_type: OrderType,
-        price: Option<f64>,
-        timestamp: u64,
-        expiry_date: Option<u64>,
-        symbol: String,
-        side: Side,
-        timeinforce: Option<TimeInForce>,
-        futures_opt: Option<Futures>,
-        options_opt: Option<Options>,
-        swap_opt: Option<Swap>,
-        cfd_opt: Option<String>,
-    ) -> Self;
-}
-
-
-impl OrderTrait for OrderCommon {
-    fn new(
-        id: String,
-        quantity: u32,
-        product_type: ProductType,
-        order_type: OrderType,
-        price: Option<f64>,
-        timestamp: u64,
-        expiry_date: Option<u64>,
-        symbol: String,
-        side: Side,
-        timeinforce: Option<TimeInForce>,
-        futures_opt: Option<Futures>,
-        options_opt: Option<Options>,
-        swap_opt: Option<Swap>,
-        cfd_opt: Option<String>,
-    ) -> Self {
-        OrderCommon::new(
+        Order {
             id,
             quantity,
             product_type,
@@ -219,6 +161,8 @@ impl OrderTrait for OrderCommon {
             options_opt,
             swap_opt,
             cfd_opt,
-        )
+        }
     }
 }
+
+

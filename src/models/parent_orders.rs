@@ -26,29 +26,54 @@ THE SOFTWARE.
    Date: 25/5/24
 ******************************************************************************/
 
-use super::common_orders::{OrderCommon, OrderTrait};
+use super::common_orders::{Order, ProductType, OrderType, Side, TimeInForce, Futures, Options, Swap};
 use serde::{Deserialize, Serialize};
 
 /// Structure representing a parent order.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ParentOrder {
-    pub common: OrderCommon,
-    // Other specific fields for ParentOrder
+    #[serde(flatten)]
+    pub order_common: Order,
+    pub strategy_id: String,
 }
 
-impl OrderTrait for ParentOrder {
-    fn new(id: String, quantity: u32) -> Self {
+impl ParentOrder {
+    pub fn new(
+        id: String,
+        quantity: u32,
+        product_type: ProductType,
+        order_type: OrderType,
+        price: Option<f64>,
+        timestamp: u64,
+        expiry_date: Option<u64>,
+        symbol: String,
+        side: Side,
+        timeinforce: Option<TimeInForce>,
+        futures_opt: Option<Futures>,
+        options_opt: Option<Options>,
+        swap_opt: Option<Swap>,
+        cfd_opt: Option<String>,
+        strategy_id: String,
+    ) -> Self {
         ParentOrder {
-            common: OrderCommon::new(id, quantity),
-            // Initialize other specific fields
+            order_common: Order::new(
+                id,
+                quantity,
+                product_type,
+                order_type,
+                price,
+                timestamp,
+                expiry_date,
+                symbol,
+                side,
+                timeinforce,
+                futures_opt,
+                options_opt,
+                swap_opt,
+                cfd_opt,
+            ),
+            strategy_id,
         }
     }
-
-    fn get_id(&self) -> &String {
-        self.common.get_id()
-    }
-
-    fn get_quantity(&self) -> u32 {
-        self.common.get_quantity()
-    }
+}
 }
