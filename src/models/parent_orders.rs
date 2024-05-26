@@ -26,7 +26,8 @@ THE SOFTWARE.
    Date: 25/5/24
 ******************************************************************************/
 
-use super::common_orders::{Order, ProductType, OrderType, Side, TimeInForce, Futures, Options, Swap};
+use super::orders::{Futures, Options, Order, OrderType, ProductType, Side, Swap, TimeInForce};
+use crate::CFD;
 use serde::{Deserialize, Serialize};
 
 /// Structure representing a parent order.
@@ -48,11 +49,13 @@ impl ParentOrder {
         expiry_date: Option<u64>,
         symbol: String,
         side: Side,
+        currency: String,
+        exchange: Option<String>,
         timeinforce: Option<TimeInForce>,
         futures_opt: Option<Futures>,
         options_opt: Option<Options>,
         swap_opt: Option<Swap>,
-        cfd_opt: Option<String>,
+        cfd_opt: Option<CFD>,
         strategy_id: String,
     ) -> Self {
         ParentOrder {
@@ -66,6 +69,8 @@ impl ParentOrder {
                 expiry_date,
                 symbol,
                 side,
+                currency,
+                exchange,
                 timeinforce,
                 futures_opt,
                 options_opt,
@@ -75,5 +80,4 @@ impl ParentOrder {
             strategy_id,
         }
     }
-}
 }

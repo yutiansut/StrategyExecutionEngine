@@ -26,32 +26,14 @@ THE SOFTWARE.
    Date: 25/5/24
 ******************************************************************************/
 
-use super::common_orders::{OrderCommon, OrderTrait};
+use super::orders::Order;
 use serde::{Deserialize, Serialize};
 use std::string::String;
 
 /// Structure representing a child order.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ChildOrder {
-    pub common: OrderCommon,
+    pub common: Order,
     pub parent_id: String,
     // Other specific fields for ChildOrder
-}
-
-impl OrderTrait for ChildOrder {
-    fn new(id: String, quantity: u32) -> Self {
-        ChildOrder {
-            common: OrderCommon::new(id, quantity),
-            parent_id: String::new(), // Initialize with a default value or a specific value
-                                      // Initialize other specific fields
-        }
-    }
-
-    fn get_id(&self) -> &String {
-        self.common.get_id()
-    }
-
-    fn get_quantity(&self) -> u32 {
-        self.common.get_quantity()
-    }
 }

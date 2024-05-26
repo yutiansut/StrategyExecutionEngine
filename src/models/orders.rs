@@ -59,6 +59,7 @@ pub enum TimeInForce {
     GTC, // Good-Til-Canceled
     IOC, // Immediate-Or-Cancel
     GTD, // Good-Til-Date
+    FOK, // Fill-Or-Kill
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -84,8 +85,11 @@ pub struct Spot {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Futures {
-    pub contract_symbol: String,
-    pub delivery_date: u64,
+    pub delivery_date: Option<u64>,
+    pub contract_size: Option<f64>,
+    pub margin: Option<f64>,
+    pub commission: Option<f64>,
+    pub overnight_fee: Option<f64>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -102,6 +106,16 @@ pub struct Swap {
     pub notional_amount: f64,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CFD {
+    pub leverage: Option<u32>,
+    pub margin: Option<f64>,
+    pub commission: Option<f64>,
+    pub overnight_fee: Option<f64>,
+    pub dividend_adjustment: Option<f64>,
+    pub contract_size: Option<f64>,
+}
+
 /// Common structure for orders.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Order {
@@ -114,7 +128,8 @@ pub struct Order {
     pub expiry_date: Option<u64>,
     pub symbol: String,
     pub side: Side,
-    // pub strategy_id: Option<String>,
+    pub currency: String,
+    pub exchange: Option<String>,
     pub timeinforce: Option<TimeInForce>,
 
     // Futures specific fields
@@ -127,7 +142,7 @@ pub struct Order {
     pub swap_opt: Option<Swap>,
 
     // CFDs specific fields
-    pub cfd_opt: Option<String>,
+    pub cfd_opt: Option<CFD>,
 }
 impl Order {
     pub fn new(
@@ -140,11 +155,13 @@ impl Order {
         expiry_date: Option<u64>,
         symbol: String,
         side: Side,
+        currency: String,
+        exchange: Option<String>,
         timeinforce: Option<TimeInForce>,
         futures_opt: Option<Futures>,
         options_opt: Option<Options>,
         swap_opt: Option<Swap>,
-        cfd_opt: Option<String>,
+        cfd_opt: Option<CFD>,
     ) -> Self {
         Order {
             id,
@@ -156,6 +173,8 @@ impl Order {
             expiry_date,
             symbol,
             side,
+            currency,
+            exchange,
             timeinforce,
             futures_opt,
             options_opt,
@@ -164,5 +183,3 @@ impl Order {
         }
     }
 }
-
-

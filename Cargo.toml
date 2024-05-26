@@ -47,9 +47,13 @@ path = "examples/simple.rs"
 name = "example_fully"
 path = "examples/fully.rs"
 
+#[[test]]
+#name = "config_test"
+#path = "tests/unit/config_test.rs"
+#
 [[test]]
-name = "config_test"
-path = "tests/unit/config_test.rs"
+name = "tests"
+path = "tests/unit/mod.rs"
 
 [lib]
 name = "strategy_execution_engine"

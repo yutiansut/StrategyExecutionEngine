@@ -23,14 +23,7 @@ THE SOFTWARE.
 /******************************************************************************
    Author: Joaquín Béjar García
    Email: jb@taunais.com
-   Date: 25/5/24
+   Date: 26/5/24
 ******************************************************************************/
-// Declaring submodules within the models module
-pub mod child_orders;
-pub mod orders;
-pub mod parent_orders;
 
-// Re-exporting submodules to make them accessible from the models module
-pub use child_orders::*;
-pub use orders::*;
-pub use parent_orders::*;
+mod config_test;
