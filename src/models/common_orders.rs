@@ -31,7 +31,7 @@ use serde::{Deserialize, Serialize};
 pub enum ProductType {
     Spot,
     Futures,
-    Option,
+    Options,
     Swap,
     CFD,
 }
@@ -54,6 +54,54 @@ pub enum OptionType {
     Put,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum TimeInForce {
+    GTC,
+    IOC,
+    GTD,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum AssetClass {
+    Stock,
+    Bond,
+    Commodity,
+    Currency,
+    Crypto,
+    ETF,
+    MutualFund,
+    Index,
+    Equity,
+    Derivative,
+    Insurance,
+    Loan,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Spot {
+    pub asset_class: Option<AssetClass>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Futures {
+    pub contract_symbol: String,
+    pub delivery_date: u64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Options {
+    pub strike_price: f64,
+    pub option_type: OptionType,
+    pub expiry_date: u64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Swap {
+    pub fixed_rate: f64,
+    pub floating_rate_index: String,
+    pub notional_amount: f64,
+}
+
 
 /// Common structure for orders.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -68,30 +116,20 @@ pub struct OrderCommon {
     pub symbol: String,
     pub side: Side,
     pub strategy_id: Option<String>,
-
+    pub timeinforce: Option<TimeInForce>,
 
     // Futures specific fields
-    pub contract_symbol: Option<String>,
-    pub delivery_date: Option<u64>,
+    pub futures_opt: Option<Futures>,
 
     // Options specific fields
-    pub strike_price: Option<f64>,
-    pub option_type: Option<OptionType>,
+    pub options_opt: Option<Options>,
 
     // Swaps specific fields
-    pub fixed_rate: Option<f64>,
-    pub floating_rate_index: Option<String>,
-    pub notional_amount: Option<f64>,
+    pub swap_opt: Option<Swap>,
 
-    // Bonds specific fields
-    pub bond_coupon: Option<f64>,
-    pub bond_maturity_date: Option<u64>,
+    // CFDs specific fields
+    pub cfd_opt: Option<String>,
 
-    // Crypto specific fields
-    pub crypto_wallet_address: Option<String>,
-
-    // RealEstate specific fields
-    pub real_estate_property_id: Option<String>,
 }
 
 
