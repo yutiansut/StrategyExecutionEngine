@@ -27,7 +27,7 @@ THE SOFTWARE.
 ******************************************************************************/
 
 use super::orders::{Futures, Options, Order, OrderType, ProductType, Side, Swap, TimeInForce};
-use crate::CFD;
+use crate::{CFD, Validate};
 use serde::{Deserialize, Serialize};
 
 /// Structure representing a parent order.
@@ -79,5 +79,12 @@ impl ParentOrder {
             ),
             strategy_id,
         }
+    }
+}
+
+impl Validate for ParentOrder {
+    fn validate(&self) -> bool {
+        // TODO: Implement validation logic
+        true
     }
 }

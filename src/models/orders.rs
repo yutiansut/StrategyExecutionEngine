@@ -83,6 +83,13 @@ pub struct Spot {
     pub asset_class: Option<AssetClass>,
 }
 
+impl Validate for Spot {
+    fn validate(&self) -> bool {
+        // TODO: Implement validation logic
+        true
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Futures {
     pub delivery_date: Option<u64>,
@@ -92,6 +99,13 @@ pub struct Futures {
     pub overnight_fee: Option<f64>,
 }
 
+impl Validate for Futures {
+    fn validate(&self) -> bool {
+        // TODO: Implement validation logic
+        true
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Options {
     pub strike_price: f64,
@@ -99,11 +113,25 @@ pub struct Options {
     pub expiry_date: u64,
 }
 
+impl Validate for Options {
+    fn validate(&self) -> bool {
+        // TODO: Implement validation logic
+        true
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Swap {
     pub fixed_rate: f64,
     pub floating_rate_index: String,
     pub notional_amount: f64,
+}
+
+impl Validate for Swap {
+    fn validate(&self) -> bool {
+        // TODO: Implement validation logic
+        true
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -114,6 +142,13 @@ pub struct CFD {
     pub overnight_fee: Option<f64>,
     pub dividend_adjustment: Option<f64>,
     pub contract_size: Option<f64>,
+}
+
+impl Validate for CFD {
+    fn validate(&self) -> bool {
+        // TODO: Implement validation logic
+        true
+    }
 }
 
 /// Common structure for orders.
@@ -144,6 +179,7 @@ pub struct Order {
     // CFDs specific fields
     pub cfd_opt: Option<CFD>,
 }
+
 impl Order {
     pub fn new(
         id: String,
@@ -181,5 +217,16 @@ impl Order {
             swap_opt,
             cfd_opt,
         }
+    }
+}
+
+pub trait Validate {
+    fn validate(&self) -> bool;
+}
+
+impl Validate for Order {
+    fn validate(&self) -> bool {
+        // TODO: Implement validation logic
+        true
     }
 }
