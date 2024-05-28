@@ -56,6 +56,8 @@ impl ParentOrder {
         options_opt: Option<Options>,
         swap_opt: Option<Swap>,
         cfd_opt: Option<CFD>,
+        notional: Option<f64>,
+        nonce: Option<u64>,
         strategy_id: String,
     ) -> Self {
         ParentOrder {
@@ -76,6 +78,8 @@ impl ParentOrder {
                 options_opt,
                 swap_opt,
                 cfd_opt,
+                notional,
+                nonce,
             ),
             strategy_id,
         }

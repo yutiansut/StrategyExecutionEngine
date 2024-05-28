@@ -226,6 +226,9 @@ pub struct Order {
 
     // CFDs specific fields
     pub cfd_opt: Option<CFD>,
+
+    pub notional: Option<f64>,
+    pub nonce: Option<u64>,
 }
 
 impl Order {
@@ -246,6 +249,8 @@ impl Order {
         options_opt: Option<Options>,
         swap_opt: Option<Swap>,
         cfd_opt: Option<CFD>,
+        notional: Option<f64>,
+        nonce: Option<u64>,
     ) -> Self {
         Order {
             id,
@@ -264,6 +269,8 @@ impl Order {
             options_opt,
             swap_opt,
             cfd_opt,
+            notional,
+            nonce,
         }
     }
 }
@@ -285,6 +292,11 @@ impl Validate for Order {
         }
         if self.currency.is_empty() {
             return Err("Currency cannot be empty".to_string());
+        }
+        if let Some(notional) = self.notional {
+            if notional <= 0.0 {
+                return Err("Notional must be greater than zero".to_string());
+            }
         }
         if let Some(futures) = &self.futures_opt {
             futures.validate()?;

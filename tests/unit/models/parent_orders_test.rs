@@ -54,6 +54,8 @@ mod parent_orders_tests {
             None,
             None,
             None,
+            None,
+            None,
             String::from("strategy1"),
         );
 
@@ -115,6 +117,8 @@ mod parent_orders_tests {
             None,
             None,
             None,
+            Some(100.0),
+            Some(1234567890),
             String::from("strategy2"),
         );
 
@@ -146,6 +150,8 @@ mod parent_orders_tests {
         assert!(parent_order.order_common.options_opt.is_none());
         assert!(parent_order.order_common.swap_opt.is_none());
         assert!(parent_order.order_common.cfd_opt.is_none());
+        assert!(parent_order.order_common.notional.is_some());
+        assert!(parent_order.order_common.nonce.is_some());
         assert_eq!(parent_order.strategy_id, "strategy2");
     }
 
@@ -172,6 +178,8 @@ mod parent_orders_tests {
             Some(TimeInForce::GTC),
             None,
             Some(options),
+            None,
+            None,
             None,
             None,
             String::from("strategy3"),
@@ -232,6 +240,8 @@ mod parent_orders_tests {
             None,
             None,
             Some(swap),
+            None,
+            None,
             None,
             String::from("strategy4"),
         );
@@ -295,6 +305,8 @@ mod parent_orders_tests {
             None,
             None,
             Some(cfd),
+            None,
+            None,
             String::from("strategy5"),
         );
 
@@ -348,11 +360,12 @@ mod parent_orders_tests {
             None,
             None,
             None,
+            None,
+            None,
             String::from("strategy1"),
         );
 
         let serialized = serde_json::to_string(&parent_order).unwrap();
-        println!("{}", serialized);
         assert!(serialized.contains("\"id\":\"order1\""));
         assert!(serialized.contains("\"quantity\":100"));
         assert!(serialized.contains("\"product_type\":\"Spot\""));
@@ -435,6 +448,8 @@ mod parent_orders_tests {
             None,
             None,
             None,
+            None,
+            None,
             String::from("strategy1"),
         );
         assert!(parent_order.validate().is_ok());
@@ -455,6 +470,8 @@ mod parent_orders_tests {
             String::from("USD"),
             Some(String::from("NASDAQ")),
             Some(TimeInForce::GTC),
+            None,
+            None,
             None,
             None,
             None,

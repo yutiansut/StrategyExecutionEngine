@@ -168,6 +168,8 @@ mod orders_tests {
             None,
             None,
             None,
+            None,
+            None,
         );
 
         assert_eq!(order.id, "order1");
@@ -212,6 +214,8 @@ mod orders_tests {
             Some(String::from("CME")),
             Some(TimeInForce::GTC),
             Some(futures),
+            None,
+            None,
             None,
             None,
             None,
@@ -260,6 +264,8 @@ mod orders_tests {
             Some(options),
             None,
             None,
+            Some(13.3),
+            Some(123456),
         );
 
         assert_eq!(order.id, "order3");
@@ -278,6 +284,8 @@ mod orders_tests {
         assert!(order.options_opt.is_some());
         assert!(order.swap_opt.is_none());
         assert!(order.cfd_opt.is_none());
+        assert_eq!(order.notional, Some(13.3));
+        assert_eq!(order.nonce, Some(123456));
     }
 
     #[test]
@@ -295,6 +303,8 @@ mod orders_tests {
             String::from("USD"),
             Some(String::from("NASDAQ")),
             Some(TimeInForce::GTC),
+            None,
+            None,
             None,
             None,
             None,
@@ -318,6 +328,8 @@ mod orders_tests {
             String::new(),
             Some(String::from("NASDAQ")),
             Some(TimeInForce::GTC),
+            None,
+            None,
             None,
             None,
             None,
