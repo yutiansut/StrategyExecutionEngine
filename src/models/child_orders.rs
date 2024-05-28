@@ -26,14 +26,81 @@ THE SOFTWARE.
    Date: 25/5/24
 ******************************************************************************/
 
-use super::orders::Order;
-use serde::{Deserialize, Serialize};
-use std::string::String;
 
-/// Structure representing a child order.
+use super::orders::{Futures, Options, Order, OrderType, ProductType, Side, Swap, TimeInForce};
+use crate::{Validate, CFD};
+use serde::{Deserialize, Serialize};
+
+/// Structure representing a parent order.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ChildOrder {
-    pub common: Order,
+    #[serde(flatten)]
+    pub order_common: Order,
+    pub strategy_id: String,
     pub parent_id: String,
-    // Other specific fields for ChildOrder
+    pub insert_at: Option<u64>,
+}
+
+impl ChildOrder {
+    pub fn new(
+        id: String,
+        quantity: u32,
+        product_type: ProductType,
+        order_type: OrderType,
+        price: Option<f64>,
+        timestamp: u64,
+        expiry_date: Option<u64>,
+        symbol: String,
+        side: Side,
+        currency: String,
+        exchange: Option<String>,
+        timeinforce: Option<TimeInForce>,
+        futures_opt: Option<Futures>,
+        options_opt: Option<Options>,
+        swap_opt: Option<Swap>,
+        cfd_opt: Option<CFD>,
+        notional: Option<f64>,
+        nonce: Option<u64>,
+        strategy_id: String,
+        parent_id: String,
+        insert_at: Option<u64>,
+    ) -> Self {
+        ChildOrder {
+            order_common: Order::new(
+                id,
+                quantity,
+                product_type,
+                order_type,
+                price,
+                timestamp,
+                expiry_date,
+                symbol,
+                side,
+                currency,
+                exchange,
+                timeinforce,
+                futures_opt,
+                options_opt,
+                swap_opt,
+                cfd_opt,
+                notional,
+                nonce,
+            ),
+            strategy_id,
+            parent_id,
+            insert_at,
+        }
+    }
+}
+
+impl Validate for ChildOrder {
+    fn validate(&self) -> Result<(), String> {
+        if self.strategy_id.is_empty() {
+            return Err("Strategy ID cannot be empty".to_string());
+        }
+        if self.parent_id.is_empty() {
+            return Err("Parent ID cannot be empty".to_string());
+        }
+        self.order_common.validate()
+    }
 }
