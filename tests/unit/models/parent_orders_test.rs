@@ -391,16 +391,28 @@ mod parent_orders_tests {
         let deserialized: ParentOrder = serde_json::from_str(data).unwrap();
         assert_eq!(deserialized.order_common.id, "order1");
         assert_eq!(deserialized.order_common.quantity, 100);
-        assert_eq!(format!("{:?}", deserialized.order_common.product_type), "Spot");
-        assert_eq!(format!("{:?}", deserialized.order_common.order_type), "Market");
+        assert_eq!(
+            format!("{:?}", deserialized.order_common.product_type),
+            "Spot"
+        );
+        assert_eq!(
+            format!("{:?}", deserialized.order_common.order_type),
+            "Market"
+        );
         assert_eq!(deserialized.order_common.price, Some(3000.0));
         assert_eq!(deserialized.order_common.timestamp, 1622512800);
         assert_eq!(deserialized.order_common.expiry_date, Some(1625114800));
         assert_eq!(deserialized.order_common.symbol, "AAPL");
         assert_eq!(format!("{:?}", deserialized.order_common.side), "Buy");
         assert_eq!(deserialized.order_common.currency, "USD");
-        assert_eq!(deserialized.order_common.exchange, Some(String::from("NASDAQ")));
-        assert_eq!(format!("{:?}", deserialized.order_common.timeinforce), "Some(GTC)");
+        assert_eq!(
+            deserialized.order_common.exchange,
+            Some(String::from("NASDAQ"))
+        );
+        assert_eq!(
+            format!("{:?}", deserialized.order_common.timeinforce),
+            "Some(GTC)"
+        );
         assert_eq!(deserialized.strategy_id, "strategy1");
     }
 
@@ -451,5 +463,4 @@ mod parent_orders_tests {
         );
         assert!(parent_order.validate().is_err());
     }
-
 }

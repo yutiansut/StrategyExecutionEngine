@@ -27,7 +27,7 @@ THE SOFTWARE.
 ******************************************************************************/
 
 use super::orders::{Futures, Options, Order, OrderType, ProductType, Side, Swap, TimeInForce};
-use crate::{CFD, Validate};
+use crate::{Validate, CFD};
 use serde::{Deserialize, Serialize};
 
 /// Structure representing a parent order.
