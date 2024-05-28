@@ -33,6 +33,7 @@ mod parent_orders_tests {
         Futures, OptionType, Options, OrderType, ProductType, Side, Swap, TimeInForce, CFD,
     };
     use strategy_execution_engine::models::parent_orders::ParentOrder;
+    use strategy_execution_engine::Validate;
 
     #[test]
     fn test_create_parent_order() {
@@ -402,4 +403,53 @@ mod parent_orders_tests {
         assert_eq!(format!("{:?}", deserialized.order_common.timeinforce), "Some(GTC)");
         assert_eq!(deserialized.strategy_id, "strategy1");
     }
+
+    #[test]
+    fn test_parent_order_validation() {
+        let parent_order = ParentOrder::new(
+            String::from("order1"),
+            100,
+            ProductType::Spot,
+            OrderType::Market,
+            Some(3000.0),
+            1622512800,
+            Some(1625114800),
+            String::from("AAPL"),
+            Side::Buy,
+            String::from("USD"),
+            Some(String::from("NASDAQ")),
+            Some(TimeInForce::GTC),
+            None,
+            None,
+            None,
+            None,
+            String::from("strategy1"),
+        );
+        assert!(parent_order.validate().is_ok());
+    }
+
+    #[test]
+    fn test_parent_order_validation_failure() {
+        let parent_order = ParentOrder::new(
+            String::from("order1"),
+            100,
+            ProductType::Spot,
+            OrderType::Market,
+            Some(3000.0),
+            1622512800,
+            Some(1625114800),
+            String::from("AAPL"),
+            Side::Buy,
+            String::from("USD"),
+            Some(String::from("NASDAQ")),
+            Some(TimeInForce::GTC),
+            None,
+            None,
+            None,
+            None,
+            String::new(),
+        );
+        assert!(parent_order.validate().is_err());
+    }
+
 }

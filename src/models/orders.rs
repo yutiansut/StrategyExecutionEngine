@@ -84,9 +84,9 @@ pub struct Spot {
 }
 
 impl Validate for Spot {
-    fn validate(&self) -> bool {
+    fn validate(&self) -> Result<(), String> {
         // TODO: Implement validation logic
-        true
+        Ok(())
     }
 }
 
@@ -99,10 +99,29 @@ pub struct Futures {
     pub overnight_fee: Option<f64>,
 }
 
-impl Validate for Futures {
-    fn validate(&self) -> bool {
-        // TODO: Implement validation logic
-        true
+impl Futures {
+    pub fn validate(&self) -> Result<(), String> {
+        if let Some(contract_size) = self.contract_size {
+            if contract_size <= 0.0 {
+                return Err("Contract size must be greater than zero".to_string());
+            }
+        }
+        if let Some(margin) = self.margin {
+            if margin < 0.0 {
+                return Err("Margin cannot be negative".to_string());
+            }
+        }
+        if let Some(commission) = self.commission {
+            if commission < 0.0 {
+                return Err("Commission cannot be negative".to_string());
+            }
+        }
+        if let Some(overnight_fee) = self.overnight_fee {
+            if overnight_fee < 0.0 {
+                return Err("Overnight fee cannot be negative".to_string());
+            }
+        }
+        Ok(())
     }
 }
 
@@ -113,10 +132,12 @@ pub struct Options {
     pub expiry_date: u64,
 }
 
-impl Validate for Options {
-    fn validate(&self) -> bool {
-        // TODO: Implement validation logic
-        true
+impl Options {
+    pub fn validate(&self) -> Result<(), String> {
+        if self.strike_price <= 0.0 {
+            return Err("Strike price must be greater than zero".to_string());
+        }
+        Ok(())
     }
 }
 
@@ -127,10 +148,18 @@ pub struct Swap {
     pub notional_amount: f64,
 }
 
-impl Validate for Swap {
-    fn validate(&self) -> bool {
-        // TODO: Implement validation logic
-        true
+impl Swap {
+    pub fn validate(&self) -> Result<(), String> {
+        if self.fixed_rate < 0.0 {
+            return Err("Fixed rate cannot be negative".to_string());
+        }
+        if self.notional_amount <= 0.0 {
+            return Err("Notional amount must be greater than zero".to_string());
+        }
+        if self.floating_rate_index.is_empty() {
+            return Err("Floating rate index cannot be empty".to_string());
+        }
+        Ok(())
     }
 }
 
@@ -144,10 +173,29 @@ pub struct CFD {
     pub contract_size: Option<f64>,
 }
 
-impl Validate for CFD {
-    fn validate(&self) -> bool {
-        // TODO: Implement validation logic
-        true
+impl CFD {
+    pub fn validate(&self) -> Result<(), String> {
+        if let Some(leverage) = self.leverage {
+            if leverage == 0 {
+                return Err("Leverage must be greater than zero".to_string());
+            }
+        }
+        if let Some(margin) = self.margin {
+            if margin < 0.0 {
+                return Err("Margin cannot be negative".to_string());
+            }
+        }
+        if let Some(commission) = self.commission {
+            if commission < 0.0 {
+                return Err("Commission cannot be negative".to_string());
+            }
+        }
+        if let Some(overnight_fee) = self.overnight_fee {
+            if overnight_fee < 0.0 {
+                return Err("Overnight fee cannot be negative".to_string());
+            }
+        }
+        Ok(())
     }
 }
 
@@ -221,12 +269,35 @@ impl Order {
 }
 
 pub trait Validate {
-    fn validate(&self) -> bool;
+    fn validate(&self) -> Result<(), String>;
 }
 
 impl Validate for Order {
-    fn validate(&self) -> bool {
-        // TODO: Implement validation logic
-        true
+    fn validate(&self) -> Result<(), String> {
+        if self.id.is_empty() {
+            return Err("ID cannot be empty".to_string());
+        }
+        if self.quantity == 0 {
+            return Err("Quantity must be greater than zero".to_string());
+        }
+        if self.symbol.is_empty() {
+            return Err("Symbol cannot be empty".to_string());
+        }
+        if self.currency.is_empty() {
+            return Err("Currency cannot be empty".to_string());
+        }
+        if let Some(futures) = &self.futures_opt {
+            futures.validate()?;
+        }
+        if let Some(options) = &self.options_opt {
+            options.validate()?;
+        }
+        if let Some(swap) = &self.swap_opt {
+            swap.validate()?;
+        }
+        if let Some(cfd) = &self.cfd_opt {
+            cfd.validate()?;
+        }
+        Ok(())
     }
 }

@@ -83,8 +83,10 @@ impl ParentOrder {
 }
 
 impl Validate for ParentOrder {
-    fn validate(&self) -> bool {
-        // TODO: Implement validation logic
-        true
+    fn validate(&self) -> Result<(), String> {
+        if self.strategy_id.is_empty() {
+            return Err("Strategy ID cannot be empty".to_string());
+        }
+        self.order_common.validate()
     }
 }

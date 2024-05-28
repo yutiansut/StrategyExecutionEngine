@@ -32,6 +32,7 @@ mod orders_tests {
     use strategy_execution_engine::models::orders::{
         Futures, OptionType, Options, Order, OrderType, ProductType, Side, Swap, TimeInForce, CFD,
     };
+    use strategy_execution_engine::Validate;
 
     #[test]
     fn test_create_product_type() {
@@ -277,5 +278,51 @@ mod orders_tests {
         assert!(order.options_opt.is_some());
         assert!(order.swap_opt.is_none());
         assert!(order.cfd_opt.is_none());
+    }
+
+    #[test]
+    fn test_order_validation() {
+        let order = Order::new(
+            String::from("order1"),
+            100,
+            ProductType::Spot,
+            OrderType::Market,
+            Some(3000.0),
+            1622512800,
+            Some(1625114800),
+            String::from("AAPL"),
+            Side::Buy,
+            String::from("USD"),
+            Some(String::from("NASDAQ")),
+            Some(TimeInForce::GTC),
+            None,
+            None,
+            None,
+            None,
+        );
+        assert!(order.validate().is_ok());
+    }
+
+    #[test]
+    fn test_order_validation_failure() {
+        let order = Order::new(
+            String::new(),
+            0,
+            ProductType::Spot,
+            OrderType::Market,
+            Some(3000.0),
+            1622512800,
+            Some(1625114800),
+            String::new(),
+            Side::Buy,
+            String::new(),
+            Some(String::from("NASDAQ")),
+            Some(TimeInForce::GTC),
+            None,
+            None,
+            None,
+            None,
+        );
+        assert!(order.validate().is_err());
     }
 }
