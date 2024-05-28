@@ -26,7 +26,6 @@ THE SOFTWARE.
    Date: 25/5/24
 ******************************************************************************/
 
-
 use super::orders::{Futures, Options, Order, OrderType, ProductType, Side, Swap, TimeInForce};
 use crate::{Validate, CFD};
 use serde::{Deserialize, Serialize};

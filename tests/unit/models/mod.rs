@@ -26,5 +26,6 @@ THE SOFTWARE.
    Date: 26/5/24
 ******************************************************************************/
 
+mod child_orders;
 mod orders_test;
 mod parent_orders_test;
