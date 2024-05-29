@@ -26,7 +26,7 @@ THE SOFTWARE.
    Date: 29/5/24
 ******************************************************************************/
 
-use crate::{Order, CFD, Spot, Futures, Options, Swap, ParentOrder, ChildOrder};
+use crate::{ChildOrder, Futures, Options, Order, ParentOrder, Spot, Swap, CFD};
 use serde::Serialize;
 use std::fmt::{Formatter, Result as FmtResult, Write};
 
@@ -71,4 +71,3 @@ impl_fmt!(Options);
 impl_fmt!(Swap);
 impl_fmt!(ParentOrder);
 impl_fmt!(ChildOrder);
-
