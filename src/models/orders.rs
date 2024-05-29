@@ -163,7 +163,7 @@ impl Swap {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct CFD {
     pub leverage: Option<u32>,
     pub margin: Option<f64>,

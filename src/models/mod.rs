@@ -29,8 +29,10 @@ THE SOFTWARE.
 pub mod child_orders;
 pub mod orders;
 pub mod parent_orders;
+pub mod format;
 
 // Re-exporting submodules to make them accessible from the models module
 pub use child_orders::*;
 pub use orders::*;
 pub use parent_orders::*;
+pub use format::*;
