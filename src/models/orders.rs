@@ -78,7 +78,7 @@ pub enum AssetClass {
     Loan,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Spot {
     pub asset_class: Option<AssetClass>,
 }
@@ -90,7 +90,7 @@ impl Validate for Spot {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Futures {
     pub delivery_date: Option<u64>,
     pub contract_size: Option<f64>,
@@ -125,7 +125,7 @@ impl Futures {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Options {
     pub strike_price: f64,
     pub option_type: OptionType,
@@ -141,7 +141,7 @@ impl Options {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Swap {
     pub fixed_rate: f64,
     pub floating_rate_index: String,

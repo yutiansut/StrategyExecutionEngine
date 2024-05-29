@@ -31,7 +31,7 @@ use crate::{Validate, CFD};
 use serde::{Deserialize, Serialize};
 
 /// Structure representing a parent order.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct ParentOrder {
     #[serde(flatten)]
     pub order_common: Order,

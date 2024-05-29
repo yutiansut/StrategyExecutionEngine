@@ -26,7 +26,7 @@ THE SOFTWARE.
    Date: 29/5/24
 ******************************************************************************/
 
-use crate::{Order, CFD};
+use crate::{Order, CFD, Spot, Futures, Options, Swap, ParentOrder, ChildOrder};
 use serde::Serialize;
 use std::fmt::{Formatter, Result as FmtResult, Write};
 
@@ -65,3 +65,10 @@ macro_rules! impl_fmt {
 // Call the macro for each type.
 impl_fmt!(CFD);
 impl_fmt!(Order);
+impl_fmt!(Spot);
+impl_fmt!(Futures);
+impl_fmt!(Options);
+impl_fmt!(Swap);
+impl_fmt!(ParentOrder);
+impl_fmt!(ChildOrder);
+
