@@ -23,10 +23,55 @@ THE SOFTWARE.
 /******************************************************************************
    Author: Joaquín Béjar García
    Email: jb@taunais.com
-   Date: 26/5/24
+   Date: 29/5/24
 ******************************************************************************/
 
-mod child_orders;
-mod format_test;
-mod orders_test;
-mod parent_orders_test;
+#[cfg(test)]
+mod orders_format_tests {
+    use strategy_execution_engine::CFD;
+
+    #[test]
+    fn test_debug_pretty_print() {
+        let cfd = CFD {
+            leverage: Some(10),
+            margin: Some(1000.0),
+            commission: Some(0.1),
+            overnight_fee: Some(0.01),
+            dividend_adjustment: None,
+            contract_size: Some(100.0),
+        };
+
+        let debug_output = format!("{:?}", cfd);
+        let expected_output = r#"{
+  "leverage": 10,
+  "margin": 1000.0,
+  "commission": 0.1,
+  "overnight_fee": 0.01,
+  "dividend_adjustment": null,
+  "contract_size": 100.0
+}"#;
+
+        assert_eq!(debug_output, expected_output);
+        // println!("{:?}", cfd);
+        // println!("{}", cfd);
+    }
+
+    #[test]
+    fn test_display_single_line() {
+        let cfd = CFD {
+            leverage: Some(10),
+            margin: Some(1000.0),
+            commission: Some(0.1),
+            overnight_fee: Some(0.01),
+            dividend_adjustment: Some(0.02),
+            contract_size: None,
+        };
+
+        let display_output = format!("{}", cfd);
+        let expected_output = r#"{"leverage":10,"margin":1000.0,"commission":0.1,"overnight_fee":0.01,"dividend_adjustment":0.02,"contract_size":null}"#;
+
+        assert_eq!(display_output, expected_output);
+        // println!("{:?}", cfd);
+        // println!("{}", cfd);
+    }
+}
