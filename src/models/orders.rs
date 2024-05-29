@@ -200,7 +200,7 @@ impl CFD {
 }
 
 /// Common structure for orders.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Order {
     pub id: String,
     pub quantity: u32,

@@ -26,18 +26,42 @@ THE SOFTWARE.
    Date: 29/5/24
 ******************************************************************************/
 
-use crate::CFD;
+use crate::{Order, CFD};
+use serde::Serialize;
+use std::fmt::{Formatter, Result as FmtResult, Write};
 
-impl std::fmt::Debug for CFD {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let json_pretty = serde_json::to_string_pretty(&self).map_err(|_| std::fmt::Error)?;
-        write!(f, "{}", json_pretty)
+fn format_helper<T: Serialize>(
+    serializable: &T,
+    f: &mut Formatter<'_>,
+    is_pretty: bool,
+) -> FmtResult {
+    let result = if is_pretty {
+        serde_json::to_string_pretty(serializable)
+    } else {
+        serde_json::to_string(serializable)
+    };
+    match result {
+        Ok(json_str) => write!(f, "{}", json_str),
+        Err(_) => Err(std::fmt::Error),
     }
 }
 
-impl std::fmt::Display for CFD {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let json = serde_json::to_string(&self).map_err(|_| std::fmt::Error)?;
-        write!(f, "{}", json)
-    }
+// This macro will generate code to implement the traits for a given type.
+macro_rules! impl_fmt {
+    ($T:ty) => {
+        impl std::fmt::Debug for $T {
+            fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+                format_helper(self, f, true)
+            }
+        }
+        impl std::fmt::Display for $T {
+            fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+                format_helper(self, f, false)
+            }
+        }
+    };
 }
+
+// Call the macro for each type.
+impl_fmt!(CFD);
+impl_fmt!(Order);
