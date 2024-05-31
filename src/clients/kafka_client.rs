@@ -32,7 +32,6 @@ use rdkafka::config::ClientConfig;
 use rdkafka::consumer::{BaseConsumer, Consumer};
 use rdkafka::message::Message;
 use rdkafka::producer::{BaseProducer, BaseRecord};
-use std::error::Error;
 use tokio::time::{sleep, Duration};
 
 pub struct KafkaClient {
