@@ -26,7 +26,7 @@ THE SOFTWARE.
    Date: 25/5/24
 ******************************************************************************/
 
-use crate::{KafkaClient, NatsClient, RedisClient, RabbitMQClient, ZeroMQClient};
+use crate::{KafkaClient, NatsClient, RabbitMQClient, RedisClient, ZeroMQClient};
 
 /// Trait for a messaging client.
 pub trait MessagingClient {
