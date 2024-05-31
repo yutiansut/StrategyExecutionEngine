@@ -25,3 +25,30 @@ THE SOFTWARE.
    Email: jb@taunais.com
    Date: 25/5/24
 ******************************************************************************/
+
+use crate::MessagingClient;
+
+pub struct RedisClient {
+    // Redis specific configuration
+}
+
+impl RedisClient {
+    pub fn new() -> Self {
+        // Initialize Redis client
+        RedisClient {}
+    }
+}
+
+impl MessagingClient for RedisClient {
+    fn produce(&self, topic: &str, message: &str) -> Result<(), String> {
+        // Redis-specific produce logic
+        println!("Producing message to Redis topic {}: {}", topic, message);
+        Ok(())
+    }
+
+    fn consume(&self, topic: &str) -> Result<String, String> {
+        // Redis-specific consume logic
+        println!("Consuming message from Redis topic {}", topic);
+        Ok("Redis message".to_string())
+    }
+}

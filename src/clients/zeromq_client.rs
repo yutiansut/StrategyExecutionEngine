@@ -25,3 +25,30 @@ THE SOFTWARE.
    Email: jb@taunais.com
    Date: 25/5/24
 ******************************************************************************/
+
+use crate::MessagingClient;
+
+pub struct ZeroMQClient {
+    // ZeroMQ specific configuration
+}
+
+impl crate::ZeroMQClient {
+    pub fn new() -> Self {
+        // Initialize ZeroMQ client
+        crate::ZeroMQClient {}
+    }
+}
+
+impl MessagingClient for crate::ZeroMQClient {
+    fn produce(&self, topic: &str, message: &str) -> Result<(), String> {
+        // NATS-specific produce logic
+        println!("Producing message to ZeroMQ topic {}: {}", topic, message);
+        Ok(())
+    }
+
+    fn consume(&self, topic: &str) -> Result<String, String> {
+        // ZeroMQ-specific consume logic
+        println!("Consuming message from NATS topic {}", topic);
+        Ok("ZeroMQ message".to_string())
+    }
+}

@@ -25,3 +25,30 @@ THE SOFTWARE.
    Email: jb@taunais.com
    Date: 25/5/24
 ******************************************************************************/
+
+use crate::MessagingClient;
+
+pub struct NatsClient {
+    // NATS specific configuration
+}
+
+impl NatsClient {
+    pub fn new() -> Self {
+        // Initialize NATS client
+        NatsClient {}
+    }
+}
+
+impl MessagingClient for NatsClient {
+    fn produce(&self, topic: &str, message: &str) -> Result<(), String> {
+        // NATS-specific produce logic
+        println!("Producing message to NATS topic {}: {}", topic, message);
+        Ok(())
+    }
+
+    fn consume(&self, topic: &str) -> Result<String, String> {
+        // NATS-specific consume logic
+        println!("Consuming message from NATS topic {}", topic);
+        Ok("NATS message".to_string())
+    }
+}

@@ -25,3 +25,30 @@ THE SOFTWARE.
    Email: jb@taunais.com
    Date: 25/5/24
 ******************************************************************************/
+
+use crate::MessagingClient;
+
+pub struct KafkaClient {
+    // Kafka specific configuration
+}
+
+impl KafkaClient {
+    pub fn new() -> Self {
+        // Initialize Kafka client
+        KafkaClient {}
+    }
+}
+
+impl MessagingClient for KafkaClient {
+    fn produce(&self, topic: &str, message: &str) -> Result<(), String> {
+        // Kafka-specific produce logic
+        println!("Producing message to Kafka topic {}: {}", topic, message);
+        Ok(())
+    }
+
+    fn consume(&self, topic: &str) -> Result<String, String> {
+        // Kafka-specific consume logic
+        println!("Consuming message from Kafka topic {}", topic);
+        Ok("Kafka message".to_string())
+    }
+}
