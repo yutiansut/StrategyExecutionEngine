@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 services:
 
@@ -12,6 +12,9 @@ services:
       - "zookeeper_data:/bitnami"
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - kafka-network
+
   kafka:
     image: docker.io/bitnami/kafka:3.6
     container_name: kafka
@@ -22,11 +25,14 @@ services:
       - "kafka_data:/bitnami"
     environment:
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://${KAFKA_HOST}:9092
       - ALLOW_PLAINTEXT_LISTENER=yes
       - KAFKA_CFG_NUM_PARTITIONS=12
     depends_on:
       - zookeeper
+    networks:
+      - kafka-network
+
   kowl:
     image: quay.io/cloudhut/kowl:latest
     container_name: kowl
@@ -37,9 +43,16 @@ services:
       - KAFKA_BROKERS=kafka:9092
     depends_on:
       - kafka
+    networks:
+        - kafka-network
 
 volumes:
   zookeeper_data:
     driver: local
   kafka_data:
     driver: local
+
+networks:
+  kafka-network:
+    name: kafka-network
+    driver: bridge

@@ -2,7 +2,8 @@
 CARGO = cargo
 DOCKER = docker
 #HOST_IP := $(shell hostname -I | awk '{print $$1}')
-HOST_IP := localhost
+KAFKA_HOST := kafka # Use the container name as the host IP or the IP of the host machine
+REDISPASS = password
 
 # Default target
 .PHONY: all
@@ -76,8 +77,8 @@ check: build test clippy fmt
 # Start Kafka and dependencies using Docker Compose
 .PHONY: kafka-up
 kafka-up:
-	@echo "Starting Kafka with HOST_IP=$(HOST_IP)"
-	@KAFKA_HOST=$(HOST_IP) docker-compose -f Docker/kafka.yml up -d
+	@echo "Starting Kafka with KAFKA_HOST=$(KAFKA_HOST)"
+	@KAFKA_HOST=$(KAFKA_HOST) docker-compose -f Docker/kafka.yml up -d
 
 # Stop Kafka and dependencies using Docker Compose
 .PHONY: kafka-down

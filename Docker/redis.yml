@@ -1,0 +1,121 @@
+version: '3.8'
+
+services:
+
+  redis-master1:
+    image: redis:7.2.3
+    restart: unless-stopped
+    container_name: redis_master1
+    command: [ "redis-server", "--bind", "0.0.0.0", "--port", "7001", "--tcp-backlog", "511", "--protected-mode", "no", "--appendonly", "no", "--save", "", "--cluster-enabled", "yes", "--cluster-config-file", "nodes.conf", "--cluster-node-timeout", "5000", "--requirepass", "${REDISPASS}", "--masterauth", "${REDISPASS}" ]
+    network_mode: host
+    volumes:
+      - "master1_data::/data"
+      - "master1_config:/etc/redis"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+
+  redis-master2:
+    image: redis:7.2.3
+    restart: unless-stopped
+    container_name: redis_master2
+    command: [ "redis-server", "--bind", "0.0.0.0", "--port", "7002", "--tcp-backlog", "511", "--protected-mode", "no", "--appendonly", "no", "--save", "", "--cluster-enabled", "yes", "--cluster-config-file", "nodes.conf", "--cluster-node-timeout", "5000", "--requirepass", "${REDISPASS}", "--masterauth", "${REDISPASS}" ]
+    network_mode: host
+    volumes:
+      - "master2_data::/data"
+      - "master2_config:/etc/redis"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  redis-master3:
+    image: redis:7.2.3
+    restart: unless-stopped
+    container_name: redis_master3
+    command: [ "redis-server", "--bind", "0.0.0.0", "--port", "7003", "--tcp-backlog", "511", "--protected-mode", "no", "--appendonly", "no", "--save", "", "--cluster-enabled", "yes", "--cluster-config-file", "nodes.conf", "--cluster-node-timeout", "5000", "--requirepass", "${REDISPASS}", "--masterauth", "${REDISPASS}" ]
+    network_mode: host
+    volumes:
+      - "master3_data::/data"
+      - "master3_config:/etc/redis"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  redis-slave1:
+    image: redis:7.2.3
+    restart: unless-stopped
+    container_name: redis_slave1
+    command: [ "redis-server", "--bind", "0.0.0.0", "--port", "7004", "--tcp-backlog", "511", "--protected-mode", "no", "--appendonly", "no", "--save", "", "--cluster-enabled", "yes", "--cluster-config-file", "nodes.conf", "--cluster-node-timeout", "5000", "--requirepass", "${REDISPASS}", "--masterauth", "${REDISPASS}" ]
+    network_mode: host
+    depends_on:
+      - redis-master1
+    volumes:
+      - "slave1_data::/data"
+      - "slave1_config:/etc/redis"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  redis-slave2:
+    image: redis:7.2.3
+    restart: unless-stopped
+    container_name: redis_slave2
+    command: [ "redis-server", "--bind", "0.0.0.0", "--port", "7005", "--tcp-backlog", "511", "--protected-mode", "no", "--appendonly", "no", "--save", "", "--cluster-enabled", "yes", "--cluster-config-file", "nodes.conf", "--cluster-node-timeout", "5000", "--requirepass", "${REDISPASS}", "--masterauth", "${REDISPASS}" ]
+    network_mode: host
+    depends_on:
+      - redis-master2
+    volumes:
+      - "slave2_data::/data"
+      - "slave2_config:/etc/redis"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  redis-slave3:
+    image: redis:7.2.3
+    restart: unless-stopped
+    container_name: redis_slave3
+    command: [ "redis-server", "--bind", "0.0.0.0", "--port", "7006", "--tcp-backlog", "511", "--protected-mode", "no", "--appendonly", "no", "--save", "", "--cluster-enabled", "yes", "--cluster-config-file", "nodes.conf", "--cluster-node-timeout", "5000", "--requirepass", "${REDISPASS}", "--masterauth", "${REDISPASS}" ]
+    network_mode: host
+    depends_on:
+      - redis-master3
+    volumes:
+      - "slave3_data::/data"
+      - "slave3_config:/etc/redis"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+volumes:
+  master1_data:
+    driver: local
+  master1_config:
+    driver: local
+  master2_data:
+    driver: local
+  master2_config:
+    driver: local
+  master3_data:
+    driver: local
+  master3_config:
+    driver: local
+  
+  slave1_data:
+    driver: local
+  slave1_config:
+    driver: local
+  slave2_data:
+    driver: local
+  slave2_config:
+    driver: local
+  slave3_data:
+    driver: local
+  slave3_config:
+    driver: local
