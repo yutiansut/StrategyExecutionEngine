@@ -95,3 +95,13 @@ redis-up:
 .PHONY: redis-down
 redis-down:
 	@REDISPASS=$(REDISPASS) docker-compose -f Docker/redis.yml down
+
+# Start NATS and dependencies using Docker Compose
+.PHONY: nats-up
+nats-up:
+	@docker-compose -f Docker/nats.yml up -d
+
+# Stop NATS and dependencies using Docker Compose
+.PHONY: nats-down
+nats-down:
+	@docker-compose -f Docker/nats.yml down
