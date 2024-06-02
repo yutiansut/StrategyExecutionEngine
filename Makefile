@@ -83,4 +83,15 @@ kafka-up:
 # Stop Kafka and dependencies using Docker Compose
 .PHONY: kafka-down
 kafka-down:
-	@docker-compose -f Docker/kafka.yml down
+	@KAFKA_HOST=$(KAFKA_HOST) docker-compose -f Docker/kafka.yml down
+
+# Start Redis and dependencies using Docker Compose
+.PHONY: redis-up
+redis-up:
+	@echo "Starting Redis with REDISPASS=$(REDISPASS)"
+	@REDISPASS=$(REDISPASS) docker-compose -f Docker/redis.yml up -d
+
+# Stop Redis and dependencies using Docker Compose
+.PHONY: redis-down
+redis-down:
+	@REDISPASS=$(REDISPASS) docker-compose -f Docker/redis.yml down
