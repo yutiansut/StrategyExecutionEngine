@@ -1,6 +1,8 @@
 # Define variables
 CARGO = cargo
 DOCKER = docker
+#HOST_IP := $(shell hostname -I | awk '{print $$1}')
+HOST_IP := localhost
 
 # Default target
 .PHONY: all
@@ -69,3 +71,15 @@ docker-push:
 # Check the status of the project (build, test, clippy, fmt)
 .PHONY: check
 check: build test clippy fmt
+
+
+# Start Kafka and dependencies using Docker Compose
+.PHONY: kafka-up
+kafka-up:
+	@echo "Starting Kafka with HOST_IP=$(HOST_IP)"
+	@KAFKA_HOST=$(HOST_IP) docker-compose -f Docker/kafka.yml up -d
+
+# Stop Kafka and dependencies using Docker Compose
+.PHONY: kafka-down
+kafka-down:
+	@docker-compose -f Docker/kafka.yml down
