@@ -110,21 +110,23 @@ nats-down:
 # Start RabbitMQ and dependencies using Docker Compose
 .PHONY: rabbitmq-up
 rabbitmq-up-docker:
+	@echo $(RABBITMQ_ERLANG_COOKIE) > Docker/.erlang.cookie
+	@chmod 600 Docker/.erlang.cookie
 	@docker-compose -f Docker/rabbitmq.yml up -d
 
 # Stop NATS and dependencies using Docker Compose
 .PHONY: rabbitmq-down
 rabbitmq-down:
 	@docker-compose -f Docker/rabbitmq.yml down -v
+	@rm -f Docker/.erlang.cookie
 
 # Initialize the RabbitMQ cluster
 rabbitmq-init-cluster:
 	@echo "Waiting for RabbitMQ containers to be ready..."
-	@echo "$(RABBITMQ_ERLANG_COOKIE)"
 	@sleep 30
 	docker exec -it rabbitmq1 bash -c "rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl start_app"
-	docker exec -it rabbitmq2 bash -c "rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl join_cluster rabbit@rabbitmq1 --erlang-cookie $(RABBITMQ_ERLANG_COOKIE) && rabbitmqctl start_app"
-	docker exec -it rabbitmq3 bash -c "rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl join_cluster rabbit@rabbitmq1 --erlang-cookie $(RABBITMQ_ERLANG_COOKIE) && rabbitmqctl start_app"
+	docker exec -it rabbitmq2 bash -c "rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl join_cluster rabbit@rabbitmq1 && rabbitmqctl start_app"
+	docker exec -it rabbitmq3 bash -c "rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl join_cluster rabbit@rabbitmq1 && rabbitmqctl start_app"
 
 # Check the status of the RabbitMQ cluster
 rabbitmq-status:
