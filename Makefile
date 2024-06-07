@@ -1,9 +1,10 @@
 # Define variables
 CARGO = cargo
 DOCKER = docker
-#HOST_IP := $(shell hostname -I | awk '{print $$1}')
-KAFKA_HOST := kafka # Use the container name as the host IP or the IP of the host machine
-REDISPASS = password
+
+# Load environment variables from .env file
+include .env
+export $(shell sed 's/=.*//' .env)
 
 # Default target
 .PHONY: all
@@ -105,3 +106,23 @@ nats-up:
 .PHONY: nats-down
 nats-down:
 	@docker-compose -f Docker/nats.yml down
+
+# Start RabbitMQ and dependencies using Docker Compose
+.PHONY: rabbitmq-up rabbitmq-init-cluster rabbitmq-status
+rabbitmq-up:
+	@docker-compose -f Docker/rabbitmq.yml up -d
+
+# Stop NATS and dependencies using Docker Compose
+.PHONY: rabbitmq-down
+rabbitmq-down:
+	@docker-compose -f Docker/rabbitmq.yml down
+
+# Initialize the RabbitMQ cluster
+rabbitmq-init-cluster:
+	docker exec -it rabbitmq1 bash -c "rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl start_app"
+	docker exec -it rabbitmq2 bash -c "rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl join_cluster rabbit@rabbitmq1 && rabbitmqctl start_app"
+	docker exec -it rabbitmq3 bash -c "rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl join_cluster rabbit@rabbitmq1 && rabbitmqctl start_app"
+
+# Check the status of the RabbitMQ cluster
+rabbitmq-status:
+	docker exec -it rabbitmq1 rabbitmqctl cluster_status
