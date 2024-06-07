@@ -11,9 +11,9 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
+    command: bash -c "rabbitmq-server --erlang-cookie ${RABBITMQ_ERLANG_COOKIE}"
     volumes:
       - rabbitmq1-data:/var/lib/rabbitmq
-      - ./erlang.cookie:/var/lib/rabbitmq/.erlang.cookie
     networks:
       rabbitmq:
         aliases:
@@ -29,9 +29,9 @@ services:
     ports:
       - "15673:15672"
       - "5673:5672"
+    command: bash -c "rabbitmq-server --erlang-cookie ${RABBITMQ_ERLANG_COOKIE}"
     volumes:
       - rabbitmq2-data:/var/lib/rabbitmq
-      - ./erlang.cookie:/var/lib/rabbitmq/.erlang.cookie
     networks:
       rabbitmq:
         aliases:
@@ -47,9 +47,9 @@ services:
     ports:
       - "15674:15672"
       - "5674:5672"
+    command: bash -c "rabbitmq-server --erlang-cookie ${RABBITMQ_ERLANG_COOKIE}"
     volumes:
       - rabbitmq3-data:/var/lib/rabbitmq
-      - ./erlang.cookie:/var/lib/rabbitmq/.erlang.cookie
     networks:
       rabbitmq:
         aliases:

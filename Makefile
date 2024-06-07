@@ -108,17 +108,19 @@ nats-down:
 	@docker-compose -f Docker/nats.yml down
 
 # Start RabbitMQ and dependencies using Docker Compose
-.PHONY: rabbitmq-up rabbitmq-init-cluster rabbitmq-status
-rabbitmq-up:
+.PHONY: rabbitmq-up
+rabbitmq-up-docker:
 	@docker-compose -f Docker/rabbitmq.yml up -d
 
 # Stop NATS and dependencies using Docker Compose
 .PHONY: rabbitmq-down
 rabbitmq-down:
-	@docker-compose -f Docker/rabbitmq.yml down
+	@docker-compose -f Docker/rabbitmq.yml down -v
 
 # Initialize the RabbitMQ cluster
 rabbitmq-init-cluster:
+	@echo "Waiting for RabbitMQ containers to be ready..."
+	@sleep 30
 	docker exec -it rabbitmq1 bash -c "rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl start_app"
 	docker exec -it rabbitmq2 bash -c "rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl join_cluster rabbit@rabbitmq1 && rabbitmqctl start_app"
 	docker exec -it rabbitmq3 bash -c "rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl join_cluster rabbit@rabbitmq1 && rabbitmqctl start_app"
@@ -126,3 +128,7 @@ rabbitmq-init-cluster:
 # Check the status of the RabbitMQ cluster
 rabbitmq-status:
 	docker exec -it rabbitmq1 rabbitmqctl cluster_status
+
+# Start the RabbitMQ cluster
+.PHONY: rabbitmq-up
+rabbitmq-up: rabbitmq-up-docker rabbitmq-init-cluster rabbitmq-status
