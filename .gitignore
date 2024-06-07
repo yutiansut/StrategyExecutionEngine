@@ -16,3 +16,4 @@ Cargo.lock
 .run/
 .env
 .local/
+/Docker/.erlang.cookie
